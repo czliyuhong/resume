@@ -34,7 +34,7 @@ let cubeRender = (function () {
         if (isMove) {
             //1.左右滑=>CHANGE-X=>ROTATE-Y (正比:CHANGE越大ROTATE越大)
             //2.上下滑=>CHANGE-Y=>ROTATE-X (反比:CHANGE越大ROTATE越小)
-            //3.为了让每一次操作旋转角度小一点，我们可以把移动距离的1/3作为旋转的角度即可,除以1可以试一下，非常灵敏
+            //3.为了让每一次操作旋转角度小一点，我们可以把移动距离的1/3作为旋转的角度即可
             rotateX = rotateX - changeY / 3;
             rotateY = rotateY + changeX / 3;
             //=>赋值给魔方盒子
