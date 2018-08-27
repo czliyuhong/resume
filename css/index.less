@@ -1,0 +1,201 @@
+//less中封装居中这个公共方法
+.CENTER(@W,@H){
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: unit(-@W/2,rem);
+  margin-top: unit(-@H/2,rem);
+  width: unit(@W,rem);
+  height: unit(@H,rem);
+}
+
+//----------
+html {
+  font-size: 100px; //1REM=100PX；
+}
+
+html, body {
+  //保证当前页面是1屏的宽度
+  height: 100%;
+  overflow: hidden;
+  background: #F4F4F4;
+}
+
+.mainBox {
+  //保证最大宽度640
+  margin: 0 auto;
+  max-width: 640px;
+  height: 100%;
+  background: #FFF;
+}
+
+/*CURE_BOX魔方区域*/
+.cubeBox {
+  position: relative;
+  height: 100%;
+  background: url("../images/zf_cubeBg.jpg") no-repeat;
+  background-size: cover;
+  perspective: 2000px; //实现3D
+
+  .tip {
+    position: absolute;
+    bottom: .5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    /* margin-left: -1.97rem;这种方式也可以，但是需要计算*/
+    width: 3.94rem;
+    height: .44rem;
+  }
+
+  /*CUBE魔方区域*/
+  .cube {
+  /* position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -2.55rem 0 0 -2.55rem;
+    width: 5.1rem;
+    height: 5.1rem;*/
+    .CENTER(5.1,5.1);
+    transform-style: preserve-3d; //实现3D
+    transition: .3s; //实现3D
+    transform: scale(0.6) rotateX(-35deg) rotateY(35deg); //给魔方初始旋转的角度
+
+    li {
+      /*开始把6个面全部叠加在一起*/
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden; //实现3D，反而不透视
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      //实现3D
+      &:nth-child(1) { /* li:nth-child(1) 获取LI中的第1个，前面那个面*/
+        transform: translateZ(2.55rem);
+      }
+      &:nth-child(2) { /* li:nth-child(2) 获取LI中的第2个，后面那个面*/
+        transform: translateZ(-2.55rem) rotateY(180deg); //rotateY(180)对着的后面那个面翻转一下，旋转过来才能显示正面
+      }
+      &:nth-child(3) { /* li:nth-child(3) 获取LI中的第3个，左面那个面*/
+        transform: translateX(-2.55rem) rotateY(-90deg);
+      }
+      &:nth-child(4) { /* li:nth-child(4) 获取LI中的第4个，右面那个面*/
+        transform: translateX(2.55rem) rotateY(90deg);
+      }
+      &:nth-child(5) { /* li:nth-child(3) 获取LI中的第5个，上面那个面*/
+        transform: translateY(-2.55rem) rotateX(90deg);
+      }
+      &:nth-child(6) { /* li:nth-child(4) 获取LI中的第6个，下面那个面*/
+        transform: translateY(2.55rem) rotateX(-90deg);
+      }
+    }
+  }
+}
+
+/*DETAILBOX详情区域*/
+.detailBox {
+  display: none;
+  height: 100%;
+
+  .swiper-container {
+    height: 100%;
+    .swiper-wrapper {
+      height: 100%;
+      .swiper-slide {
+        height: 100%;
+        /*为了区分6个页，每个页设一个背景颜色*/
+        &:nth-child(2) {
+          background: #fff9c1;
+        }
+        &:nth-child(3) {
+          background: #e45454;
+        }
+        &:nth-child(4) {
+          background: #fac471;
+        }
+        &:nth-child(5) {
+          background: #f9ffe9;
+        }
+        &:nth-child(6) {
+          background: #5975ff;
+        }
+      }
+    }
+  }
+
+  /*page1下的样式*/
+  .page1 {
+    position: relative; //dl定位用
+
+    dl {
+      //每一个都水平垂直居中，可用less封装公共方法
+      /* position: absolute;//dl相对于page1定位
+      top: 50%;
+      left: 50%;
+      margin: -2.55rem 0 0 -2.55rem;
+      width: 5.4rem;
+      height: 7.2rem;*/
+      .CENTER(5.4, 7.2);
+
+      dt, dd {
+        box-sizing: border-box;
+        line-height: .6rem;
+        height: .6rem;
+        background: #8fbb4c;
+      }
+      dt {
+        font-size: .32rem;
+        color: yellow;
+        text-align: center;
+      }
+      dd {
+        position: relative;
+        border-top: .02rem dashed rgba(255, 255, 255, 0.3);
+        font-size: .20rem;
+        color: #000000;
+
+        i {
+          position: absolute;
+          top: 50%;
+          left: .15rem;
+          margin-top: -.21rem;
+          width: .36rem;
+          height: .42rem;
+          font-size: .2rem;
+          color: #FFFFFF;
+          font-style: normal;
+          line-height: .42rem;
+          text-align: center;
+          background: url("../images/zf_outline.png") no-repeat;
+          background-size: 100% 100%;
+        }
+
+        a {
+          display: block;
+          margin-left: .66rem;
+          font-size: .28rem;
+          color: #555;
+          //本行显示不开显示……
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+  //PAGE1的动画是基于MAKISU这个JS插件来实现的
+
+  .page2{
+    position: relative;
+
+    .title{
+      
+    }
+  }
+}
